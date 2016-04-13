@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>test</title>
+    <script src="/node_modules/rx/dist/rx.all.min.js" charset="utf-8"></script>
+    <script src="/dist/bbox.min.js" charset="utf-8"></script>
+    <script type="text/javascript">
+      window.onload = function() {
+        var c = document.getElementById('canvasContainer')
+        var img = document.createElement('img')
+
+        img.onload = function() {
+          var b = Bbox({canvasContainer: c, img: img})
+          b.subscribe(function() {console.log('annotation')})
+        }
+
+        img.src = "http://www.dressedupgirl.com/wp-content/uploads/2014/12/Summer-Beach-Dresses.jpg"
+      }
+    </script>
+  </head>
+  <body>
+    <div id="canvasContainer" style="width: 600px; margin: 60px auto;"></div>
+  </body>
+</html>

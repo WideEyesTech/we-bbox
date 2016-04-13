@@ -1,0 +1,115 @@
+@define-extend bbox_annotation_btn
+{
+    font-size: .7rem;
+
+    position: absolute;
+    right: -25px;
+
+    display: none;
+
+    width: 20px;
+    height: 20px;
+    padding: 0 0 2px;
+
+    color: #333;
+    border: 1px solid white;
+    border: none;
+    border-radius: 50%;
+    background-color: gray;
+}
+
+.bbox_wrapper
+{
+    position: absolute;
+    z-index: 1;
+
+    &.active
+    {
+        z-index: 10;
+
+        .bbox
+        {
+            border-color: #f26c4f;
+
+            .bbox_annotation
+            {
+                opacity: 1;
+            }
+
+            .bbox_annotation_close,
+            .bbox_annotation_edit
+            {
+                display: block;
+            }
+        }
+    }
+
+    .bbox
+    {
+        position: relative;
+
+        border: 2px solid rgba(255, 0, 0, .1);
+        background-color: transparent;
+
+        .bbox_annotation
+        {
+            position: relative;
+
+            display: inline-block;
+
+            min-width: 50px;
+
+            text-align: center;
+            text-transform: capitalize;
+
+            border: 1px solid white;
+            border-radius: 3px;
+            background: gray;
+
+            &:after
+            {
+                position: absolute;
+                top: 100%;
+                left: 50%;
+
+                width: 0;
+                height: 0;
+                margin-left: -6px;
+
+                content: ' ';
+                pointer-events: none;
+
+                border: solid transparent;
+                border-width: 6px;
+                border-color: transparent;
+                border-top-color: gray;
+            }
+        }
+
+        .bbox_annotation_close
+        {
+            top: 0;
+
+            @extend bbox_annotation_btn;
+
+            &:hover
+            {
+                color: white;
+                background-color: #3a89c9;
+            }
+        }
+
+        .bbox_annotation_edit
+        {
+            top: 25px;
+
+            @extend bbox_annotation_btn;
+
+            &:hover
+            {
+                color: white;
+                background-color: #3a89c9;
+            }
+        }
+    }
+}
