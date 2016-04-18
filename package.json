@@ -2,7 +2,7 @@
   "name": "we-bbox",
   "version": "1.0.0",
   "description": "FE Library to perform image annotations. Pretty barebones. Used at [Wide Eyes](http://wide-eyes.it).",
-  "main": "bbox.js",
+  "main": "index.js",
   "scripts": {
     "start": "webpack",
     "test": "test"
