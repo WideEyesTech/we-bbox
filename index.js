@@ -1,1 +1,2 @@
-export Bbox from './dist'
+var Bbox = require('./dist')
+modules.exports = Bbox
