@@ -75,17 +75,27 @@ const Bbox = (options) => {
     canvasContainer.appendChild(wrapper);
 
     // EVENT LISTENERS
-    const md = Rx.Observable.fromEvent(canvas, down)
+    if (!isMobile.phone) {
+      const md = Rx.Observable.fromEvent(canvas, down)
       .flatMap(_onMousedown)
       .subscribe(_redrawCanvas);
 
-    const mu = Rx.Observable.fromEvent(canvasContainer, up)
+      const mu = Rx.Observable.fromEvent(canvasContainer, up)
       .flatMap(_onMouseup)
       .subscribe(_styleCursor);
 
-    Rx.Observable.fromEvent(canvasContainer, move)
+      Rx.Observable.fromEvent(canvasContainer, move)
       .takeUntil(Rx.Observable.fromEvent(canvasContainer, down))
       .subscribe(_styleCursor);
+    } else {
+      const md = Rx.Observable.fromEvent(canvas, down)
+      .flatMap(_onMousedown)
+      .subscribe(_redrawCanvas);
+
+      const mu = Rx.Observable.fromEvent(canvasContainer, up)
+      .flatMap(_onMouseup);
+    }
+
 
     // MAIN RETURN
     return {
@@ -242,9 +252,11 @@ const Bbox = (options) => {
       // get container position on document, it has a performance impact when window is resized
       container = canvas.getBoundingClientRect();
 
+      if (!e.touches.length) return
+
       return {
-        x: Math.round(e.clientX - container.left),
-        y: Math.round(e.clientY - container.top)
+        x: Math.round((e.clientX || e.touches[0].clientX) - container.left),
+        y: Math.round((e.clientY || e.touches[0].clientY) - container.top)
       }
     }
 
@@ -253,8 +265,8 @@ const Bbox = (options) => {
       container = canvas.getBoundingClientRect();
 
       return {
-        x: Math.round(e.clientX - container.left - origin.x),
-        y: Math.round(e.clientY - container.top - origin.y)
+        x: Math.round((e.clientX || e.touches[0].clientX) - container.left - origin.x),
+        y: Math.round((e.clientY || e.touches[0].clientY) - container.top - origin.y)
       }
     }
   }
