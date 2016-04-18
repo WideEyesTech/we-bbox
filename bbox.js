@@ -78,23 +78,23 @@ const Bbox = (options) => {
     let md, mu
     if (!isMobile.phone) {
       md = Rx.Observable.fromEvent(canvas, down)
-      .flatMap(_onMousedown)
-      .subscribe(_redrawCanvas);
+        .flatMap(_onMousedown)
+        .subscribe(_redrawCanvas);
 
       mu = Rx.Observable.fromEvent(canvasContainer, up)
-      .flatMap(_onMouseup)
-      .subscribe(_styleCursor);
+        .flatMap(_onMouseup)
+        .subscribe(_styleCursor);
 
       Rx.Observable.fromEvent(canvasContainer, move)
-      .takeUntil(Rx.Observable.fromEvent(canvasContainer, down))
-      .subscribe(_styleCursor);
+        .takeUntil(Rx.Observable.fromEvent(canvasContainer, down))
+        .subscribe(_styleCursor);
     } else {
       md = Rx.Observable.fromEvent(canvas, down)
-      .flatMap(_onMousedown)
-      .subscribe(_redrawCanvas);
+        .flatMap(_onMousedown)
+        .subscribe(_redrawCanvas);
 
       mu = Rx.Observable.fromEvent(canvasContainer, up)
-      .flatMap(_onMouseup);
+        .subscribe(_onMouseup)
     }
 
 
@@ -253,7 +253,7 @@ const Bbox = (options) => {
       // get container position on document, it has a performance impact when window is resized
       container = canvas.getBoundingClientRect();
 
-      if (!e.touches.length) return
+      if (isMobile.phone && !e.touches.length) return
 
       return {
         x: Math.round((e.clientX || e.touches[0].clientX) - container.left),

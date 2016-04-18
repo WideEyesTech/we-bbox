@@ -8,7 +8,7 @@ export default function CanvasWindow(options) {
   function _CanvasWindow(options) {
     let origin;
     let opposite;
-    let currentBbox;
+    let prevBbox;
 
     let editPoints = [];
     let selectedEP = {};
@@ -54,15 +54,15 @@ export default function CanvasWindow(options) {
     }
 
     function hasBbox() {
-      if (!currentBbox) {
+      if (!prevBbox) {
         return Math.abs(width) > delta && Math.abs(height) > delta;
       }
 
       if (
-        Math.abs(p1.x - currentBbox.x) >= delta ||
-        Math.abs(p1.y - currentBbox.y) >= delta ||
-        Math.abs(width - currentBbox.width) >= delta ||
-        Math.abs(height - currentBbox.height) >= delta
+        Math.abs(p1.x - prevBbox.x) >= delta ||
+        Math.abs(p1.y - prevBbox.y) >= delta ||
+        Math.abs(width - prevBbox.width) >= delta ||
+        Math.abs(height - prevBbox.height) >= delta
       ) {
         return Math.abs(width) > delta && Math.abs(height) > delta;
       }
@@ -71,7 +71,7 @@ export default function CanvasWindow(options) {
     }
 
     function saveBbox() {
-      currentBbox = {
+      prevBbox = {
         x: p1.x,
         y: p1.y,
         width: p2.x - p1.x,
