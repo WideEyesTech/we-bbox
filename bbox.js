@@ -75,12 +75,13 @@ const Bbox = (options) => {
     canvasContainer.appendChild(wrapper);
 
     // EVENT LISTENERS
+    let md, mu
     if (!isMobile.phone) {
-      const md = Rx.Observable.fromEvent(canvas, down)
+      md = Rx.Observable.fromEvent(canvas, down)
       .flatMap(_onMousedown)
       .subscribe(_redrawCanvas);
 
-      const mu = Rx.Observable.fromEvent(canvasContainer, up)
+      mu = Rx.Observable.fromEvent(canvasContainer, up)
       .flatMap(_onMouseup)
       .subscribe(_styleCursor);
 
@@ -88,11 +89,11 @@ const Bbox = (options) => {
       .takeUntil(Rx.Observable.fromEvent(canvasContainer, down))
       .subscribe(_styleCursor);
     } else {
-      const md = Rx.Observable.fromEvent(canvas, down)
+      md = Rx.Observable.fromEvent(canvas, down)
       .flatMap(_onMousedown)
       .subscribe(_redrawCanvas);
 
-      const mu = Rx.Observable.fromEvent(canvasContainer, up)
+      mu = Rx.Observable.fromEvent(canvasContainer, up)
       .flatMap(_onMouseup);
     }
 
