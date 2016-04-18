@@ -40,6 +40,7 @@ export default function EditPoint({origin, id, style}) {
     ctx.strokeStyle = EP.colors.stroke;
     ctx.lineWidth = EP.lineWidth;
 
+    ctx.translate(0.5, 0.5);
     ctx.beginPath();
     switch (id) {
       case 0:
