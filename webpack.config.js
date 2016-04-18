@@ -9,7 +9,9 @@ module.exports = {
     libraryTarget: "umd",
     path: __dirname + "/dist",
   },
-  externals: { "rx": "Rx" },
+  externals: {
+    'Rx': 'rx'
+  },
   module: {
     loaders: [{
       test: /\.js?$/,
