@@ -1,3 +1,4 @@
+import isMobile from 'ismobilejs'
 import Rx from 'rx'
 
 import CanvasWindow from './CanvasWindow'
@@ -6,6 +7,7 @@ let instance;
 
 const Bbox = (options) => {
   if (!instance) instance = _Bbox(options);
+
 
   return instance;
 
@@ -16,6 +18,16 @@ const Bbox = (options) => {
 
     let curPos = {x: 0, y: 0};
     let ratio = 1;
+
+    let down = 'mousedown'
+    let move = 'mousemove'
+    let up = 'mouseup'
+
+    if (isMobile.phone) {
+      down = 'touchstart'
+      move = 'touchmove'
+      up = 'touchend'
+    }
 
     const imageWidth = img.width;
     const limitWidth = canvasContainer.offsetWidth;
@@ -63,16 +75,16 @@ const Bbox = (options) => {
     canvasContainer.appendChild(wrapper);
 
     // EVENT LISTENERS
-    const md = Rx.Observable.fromEvent(canvas, 'mousedown')
+    const md = Rx.Observable.fromEvent(canvas, down)
       .flatMap(_onMousedown)
       .subscribe(_redrawCanvas);
 
-    const mu = Rx.Observable.fromEvent(canvasContainer, 'mouseup')
+    const mu = Rx.Observable.fromEvent(canvasContainer, up)
       .flatMap(_onMouseup)
       .subscribe(_styleCursor);
 
-    Rx.Observable.fromEvent(canvasContainer, 'mousemove')
-      .takeUntil(Rx.Observable.fromEvent(canvasContainer, 'mousedown'))
+    Rx.Observable.fromEvent(canvasContainer, move)
+      .takeUntil(Rx.Observable.fromEvent(canvasContainer, down))
       .subscribe(_styleCursor);
 
     // MAIN RETURN
@@ -106,8 +118,10 @@ const Bbox = (options) => {
       // get mouse position relative to container
       curPos = _getPosition(md, canvas);
 
+      const ep = cw.getEditPoint(curPos)
       let callback;
-      if (cw.isEditPoint(curPos)) {
+
+      if (ep) {
         callback = _handleRectResize;
       } else if (cw.isInside(curPos)) {
         callback = _handleRectMove;
@@ -116,26 +130,30 @@ const Bbox = (options) => {
       }
 
       // listen for mousemoves and cancel listener at mouseup
-      return Rx.Observable.fromEvent(canvasContainer, 'mousemove')
+      return Rx.Observable.fromEvent(canvasContainer, move)
         .map(callback)
-        .takeUntil(Rx.Observable.fromEvent(canvasContainer, 'mouseup'));
+        .takeUntil(Rx.Observable.fromEvent(canvasContainer, up));
     }
 
     function _onMouseup(e) {
       curPos = _getPosition(e);
+
       if (cw.hasBbox() && subscription) {
-        const origin = cw.getOrigin();
-        const final = cw.getFinal();
+        cw.saveBbox()
+
+        const origin = cw.getUpperLeftCorner();
+        const final = cw.getBottomRightCorner();
+
         subscription({
           x1: Math.round(origin.x / ratio),
-          y1: Math.round(origin.y / ratio),
           x2: Math.round(final.x / ratio),
-          y2: Math.round(final.y / ratio),
+          y1: Math.round(origin.y / ratio),
+          y2: Math.round(final.y / ratio)
         })
       }
 
-      return Rx.Observable.fromEvent(canvasContainer, 'mousemove')
-        .takeUntil(Rx.Observable.fromEvent(canvasContainer, 'mousedown'))
+      return Rx.Observable.fromEvent(canvasContainer, move)
+        .takeUntil(Rx.Observable.fromEvent(canvasContainer, down))
     }
 
     function _handleRectResize(e) {
@@ -187,9 +205,9 @@ const Bbox = (options) => {
 
     function _styleCursor(e) {
       const pos = _getPosition(e, canvasContainer);
+      const ep = cw.getEditPoint(pos);
 
-      if (cw.isEditPoint(pos)) {
-        const ep = cw.getEditPoint(pos);
+      if (ep) {
         canvas.style.cursor = ep.style;
       } else if (cw.isInside(pos) && canvas.style.cursor !== 'move') {
         canvas.style.cursor = 'move';
