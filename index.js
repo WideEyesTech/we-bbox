@@ -1,2 +1,2 @@
 var Bbox = require('./dist/index.min.js')
-modules.exports = Bbox
+module.exports = Bbox
