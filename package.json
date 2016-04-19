@@ -6,6 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server --port 3000",
     "build": "webpack",
+    "publish": "npm run build && npm version patch && npm publish",
     "test": "test"
   },
   "repository": {
