@@ -137,8 +137,12 @@ const Bbox = (options) => {
       } else if (cw.isInside(curPos)) {
         callback = _handleRectMove;
       } else {
-        callback = _handleRectDraw;
+        callback = () => ({})
       }
+
+      //  else {
+      //   callback = _handleRectDraw;
+      // }
 
       // listen for mousemoves and cancel listener at mouseup
       return Rx.Observable.fromEvent(canvasContainer, move)

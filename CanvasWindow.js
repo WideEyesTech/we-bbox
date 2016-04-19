@@ -108,44 +108,39 @@ export default function CanvasWindow(options) {
     function resize(o, d) {
       switch (selectedEP.id) {
         case 0:
-          height = Math.round(Math.abs(height) - d.y);
-          width = Math.round(Math.abs(width) - d.x);
-          origin = o;
+          height = -1 * Math.max(minSize, Math.abs(height + d.y));
+          width  = -1 * Math.max(minSize, Math.abs(width + d.x));
+          origin = p2;
           break;
         case 1:
-          height = Math.max(minSize, Math.round(Math.abs(height) - d.y));
-          width = Math.abs(width);
-          origin = { x: p1.x, y: Math.round(height) <= minSize ? p1.y : p1.y + d.y };
+          height = Math.max(minSize, height - d.y);
+          origin = { x: p1.x, y: height <= minSize ? p1.y : p1.y + d.y };
           break;
         case 2:
-          height = Math.round((Math.abs(height)) - d.y);
-          width = Math.round((Math.abs(width) * -1) - d.x);
-          origin = o;
+          height = -1 * Math.max(minSize, Math.abs(height + d.y));
+          width  = Math.max(minSize, Math.abs(width + d.x));
+          origin = {x: p1.x, y: p2.y};
           break;
         case 3:
-          height = Math.abs(height);
-          width = Math.max(minSize, Math.round(Math.abs(width) + d.x));
+          width  = Math.max(minSize, width + d.x);
           origin = p1;
           break;
         case 4:
-          height = Math.round((Math.abs(height) * -1) - d.y);
-          width = Math.round((Math.abs(width) * -1) - d.x);
-          origin = o;
+          height = Math.max(minSize, Math.abs(height + d.y));
+          width  = Math.max(minSize, Math.abs(width + d.x));
+          origin = p1;
           break;
         case 5:
-          height = Math.max(minSize, Math.round(Math.abs(height) + d.y));
-          width = Math.abs(width);
+          height = Math.max(minSize, height + d.y);
           origin = p1;
           break;
         case 6:
-          height = Math.min(-1 * minSize, Math.round((Math.abs(height) * -1) - d.y));
-          width = Math.max(minSize, Math.round(Math.abs(width) - d.x));
-          origin = o;
-          console.log(height)
+          height = Math.max(minSize, Math.abs(height + d.y));
+          width  = -1 * Math.max(minSize, Math.abs(width + d.x));
+          origin = {x: p2.x, y: p1.y};
           break;
         case 7:
-          height = Math.abs(height);
-          width = Math.max(minSize, Math.round(Math.abs(width) - d.x));
+          width  = Math.max(minSize, width - d.x);
           origin = { x: width <= minSize ? p1.x : p1.x + d.x, y: p1.y };
           break;
         default:
