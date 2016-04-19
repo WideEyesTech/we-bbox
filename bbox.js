@@ -75,28 +75,9 @@ const Bbox = (options) => {
     canvasContainer.appendChild(wrapper);
 
     // EVENT LISTENERS
-    let md, mu
-    if (!isMobile.phone) {
-      md = Rx.Observable.fromEvent(canvas, down)
-        .flatMap(_onMousedown)
-        .subscribe(_redrawCanvas);
-
-      mu = Rx.Observable.fromEvent(canvasContainer, up)
-        .flatMap(_onMouseup)
-        .subscribe(_styleCursor);
-
-      Rx.Observable.fromEvent(canvasContainer, move)
-        .takeUntil(Rx.Observable.fromEvent(canvasContainer, down))
-        .subscribe(_styleCursor);
-    } else {
-      md = Rx.Observable.fromEvent(canvas, down)
-        .flatMap(_onMousedown)
-        .subscribe(_redrawCanvas);
-
-      mu = Rx.Observable.fromEvent(canvasContainer, up)
-        .subscribe(_onMouseup)
-    }
-
+    let md = Rx.Observable
+    .fromEvent(canvas, down)
+    .subscribe(_onMousedown)
 
     // MAIN RETURN
     return {
@@ -111,7 +92,6 @@ const Bbox = (options) => {
 
       // cancel event listeners
       if (md.dispose) md.dispose();
-      if (mu.dispose) mu.dispose();
 
       // clear bbox instance
       instance = null;
@@ -136,18 +116,22 @@ const Bbox = (options) => {
         callback = _handleRectResize;
       } else if (cw.isInside(curPos)) {
         callback = _handleRectMove;
-      } else {
-        callback = () => ({})
       }
 
-      //  else {
-      //   callback = _handleRectDraw;
-      // }
+      if (callback) {
+        // redraw canvas on mousemoves
+        Rx.Observable
+          .fromEvent(canvasContainer, move)
+          .map(callback)
+          .takeUntil(Rx.Observable.fromEvent(canvasContainer, up))
+          .subscribe(_redrawCanvas)
 
-      // listen for mousemoves and cancel listener at mouseup
-      return Rx.Observable.fromEvent(canvasContainer, move)
-        .map(callback)
-        .takeUntil(Rx.Observable.fromEvent(canvasContainer, up));
+        // Callback subscription, if there is any, on mouse up
+        Rx.Observable
+          .fromEvent(canvasContainer, up)
+          .take(1) // take only first event of series
+          .subscribe(_onMouseup)
+      }
     }
 
     function _onMouseup(e) {
@@ -167,8 +151,7 @@ const Bbox = (options) => {
         })
       }
 
-      return Rx.Observable.fromEvent(canvasContainer, move)
-        .takeUntil(Rx.Observable.fromEvent(canvasContainer, down))
+      return _styleCursorListener()
     }
 
     function _handleRectResize(e) {
@@ -226,8 +209,8 @@ const Bbox = (options) => {
         canvas.style.cursor = ep.style;
       } else if (cw.isInside(pos) && canvas.style.cursor !== 'move') {
         canvas.style.cursor = 'move';
-      } else if (!cw.isInside(pos) && canvas.style.cursor !== 'crosshair') {
-        canvas.style.cursor = 'crosshair';
+      } else if (!cw.isInside(pos) && canvas.style.cursor !== 'default') {
+        canvas.style.cursor = 'default';
       }
     }
 
@@ -248,8 +231,8 @@ const Bbox = (options) => {
       const delta = _getDelta(origin, e);
       return {
         origin,
-        height: delta.y,
-        width: delta.x,
+        height: Math.round(delta.y),
+        width: Math.round(delta.x),
       };
     }
 
@@ -273,6 +256,13 @@ const Bbox = (options) => {
         x: Math.round((e.clientX || e.touches[0].clientX) - container.left - origin.x),
         y: Math.round((e.clientY || e.touches[0].clientY) - container.top - origin.y)
       }
+    }
+
+    function _styleCursorListener() {
+      return Rx.Observable
+        .fromEvent(canvasContainer, move)
+        .takeUntil(Rx.Observable.fromEvent(canvasContainer, down))
+        .subscribe(_styleCursor);
     }
   }
 }
