@@ -21,7 +21,8 @@ Finally, you can remove the annotator by calling the dispose function:
 
 ## Development
 
-build: `npm start`
+Webpack dev server: `npm start`
+build for production: `npm run build`
 
 ## Dependencies
  RxJS: `npm install --save rx`
