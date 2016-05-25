@@ -14,7 +14,7 @@ export default function CanvasWindow(options) {
     let selectedEP = {};
 
     let minSize = 60;
-    let delta = 5;
+    let delta = 15;
     if (isMobile.phone) delta = 30
 
     const globalAlpha = 0.3;
@@ -202,12 +202,12 @@ export default function CanvasWindow(options) {
       editPoints.push(_createEditPoint({x: p1.x, y: p2.y}, 6, 'nesw-resize'));
 
       // laterals
-      if (!isMobile.phone) {
-        editPoints.push(_createEditPoint({x: p2.x - Math.abs(width) / 2, y: p1.y}, 1, 'ns-resize'));
-        editPoints.push(_createEditPoint({x: p2.x, y: p2.y - Math.abs(height) / 2}, 3, 'ew-resize'));
-        editPoints.push(_createEditPoint({x: p2.x - Math.abs(width) / 2, y: p2.y}, 5, 'ns-resize'));
-        editPoints.push(_createEditPoint({x: p1.x, y: p2.y - Math.abs(height) / 2}, 7, 'ew-resize'));
-      }
+      // if (!isMobile.phone) {
+      //   editPoints.push(_createEditPoint({x: p2.x - Math.abs(width) / 2, y: p1.y}, 1, 'ns-resize'));
+      //   editPoints.push(_createEditPoint({x: p2.x, y: p2.y - Math.abs(height) / 2}, 3, 'ew-resize'));
+      //   editPoints.push(_createEditPoint({x: p2.x - Math.abs(width) / 2, y: p2.y}, 5, 'ns-resize'));
+      //   editPoints.push(_createEditPoint({x: p1.x, y: p2.y - Math.abs(height) / 2}, 7, 'ew-resize'));
+      // }
     }
 
     function _createEditPoint(origin, id, style) {

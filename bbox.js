@@ -75,9 +75,8 @@ const Bbox = (options) => {
     canvasContainer.appendChild(wrapper);
 
     // EVENT LISTENERS
-    let md = Rx.Observable
-    .fromEvent(canvas, down)
-    .subscribe(_onMousedown)
+    let md = Rx.Observable.fromEvent(canvas, down).subscribe(_onMousedown)
+    _styleCursorListener();
 
     // MAIN RETURN
     return {
