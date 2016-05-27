@@ -23,7 +23,7 @@ const Bbox = (options) => {
     let move = 'mousemove'
     let up = 'mouseup'
 
-    if (isMobile.phone) {
+    if ((isMobile.phone || isMobile.tablet)) {
       down = 'touchstart'
       move = 'touchmove'
       up = 'touchend'
@@ -239,7 +239,7 @@ const Bbox = (options) => {
       // get container position on document, it has a performance impact when window is resized
       container = canvas.getBoundingClientRect();
 
-      if (isMobile.phone && !e.touches.length) return
+      if ((isMobile.phone || isMobile.tablet) && !e.touches.length) return
 
       return {
         x: Math.round((e.clientX || e.touches[0].clientX) - container.left),
