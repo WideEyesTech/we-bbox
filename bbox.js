@@ -32,6 +32,8 @@ const Bbox = (options) => {
     const imageWidth = img.width;
     const limitWidth = canvasContainer.offsetWidth;
 
+    debugger;
+
     // resize image, if needed
     if (imageWidth > limitWidth) {
       const res = _resizeImage(img, limitWidth);
@@ -42,8 +44,8 @@ const Bbox = (options) => {
 
     // create image canvas
     const canvasBack = document.createElement('canvas');
-    canvasBack.width = Math.floor(image.width) - 1;
     canvasBack.height = Math.floor(image.height) - 1;
+    canvasBack.width = Math.floor(image.width) - 1;
 
     // draw image on canvas
     const ctxBack = canvasBack.getContext('2d');
