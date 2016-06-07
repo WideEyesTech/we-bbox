@@ -12,6 +12,8 @@ const Bbox = (options) => {
   return instance;
 
   function _Bbox({canvasContainer, img}) {
+    console.log('HELLOOOOOO')
+
     let container;
     let image;
     let subscription;
@@ -143,8 +145,6 @@ const Bbox = (options) => {
 
         const origin = cw.getUpperLeftCorner();
         const final = cw.getBottomRightCorner();
-
-        console.log(ratio)
 
         subscription({
           x1: Math.round(origin.x / ratio),
