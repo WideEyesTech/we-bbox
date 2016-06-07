@@ -32,7 +32,7 @@ const Bbox = (options) => {
     const imageWidth = img.width;
     const limitWidth = canvasContainer.offsetWidth;
 
-    debugger;
+    console.log(imageWidth, limitWidth)
 
     // resize image, if needed
     if (imageWidth > limitWidth) {
