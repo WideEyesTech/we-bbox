@@ -12,8 +12,6 @@ const Bbox = (options) => {
   return instance;
 
   function _Bbox({canvasContainer, img}) {
-    console.log('HELLOOOOOO')
-
     let container;
     let image;
     let subscription;
@@ -34,8 +32,6 @@ const Bbox = (options) => {
     const imageWidth = img.width;
     const limitWidth = canvasContainer.offsetWidth;
     const limitHeight = canvasContainer.offsetHeight;
-
-    console.log(imageWidth, limitWidth)
 
     // resize image, if needed
     if (imageWidth > limitWidth || imageHeight > limitHeight) {
