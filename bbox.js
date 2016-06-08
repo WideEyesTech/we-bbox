@@ -33,12 +33,13 @@ const Bbox = (options) => {
 
     const imageWidth = img.width;
     const limitWidth = canvasContainer.offsetWidth;
+    const limitHeight = canvasContainer.offsetHeight;
 
     console.log(imageWidth, limitWidth)
 
     // resize image, if needed
-    if (imageWidth > limitWidth) {
-      const res = _resizeImage(img, limitWidth);
+    if (imageWidth > limitWidth || imageHeight > limitHeight) {
+      const res = resizeImage(img, limitWidth, limitHeight);
       image = res.newImage;
     } else {
       image = img;
@@ -217,9 +218,38 @@ const Bbox = (options) => {
       }
     }
 
-    function _resizeImage(image, limitWidth) {
+    function resizeImage(image, limitWidth, limitHeight) {
+      if (
+        typeof image === 'undefined' ||
+        typeof limitWidth === 'undefined' ||
+        typeof limitHeight === 'undefined'
+      ) {
+        throw new Error('missing argument')
+      }
+
+      if (limitWidth >= limitHeight) {
+        return resizeWidth(image, limitWidth)
+      } else {
+        return resizeHeight(image, limitHeight)
+      }
+    }
+
+    function resizeWidth(image, limitWidth) {
       const newImage = document.createElement('img');
       ratio = limitWidth / image.width;
+
+      newImage.src = image.src;
+      newImage.width = image.width * ratio;
+      newImage.height = image.height * ratio;
+
+      return {
+        newImage, ratio
+      };
+    }
+
+    function resizeHeight(image, limitHeight) {
+      const newImage = document.createElement('img');
+      ratio = limitHeight / image.height;
 
       newImage.src = image.src;
       newImage.width = image.width * ratio;
