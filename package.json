@@ -1,12 +1,13 @@
 {
   "name": "we-bbox",
-  "version": "1.4.7",
+  "version": "1.4.6",
   "description": "FE Library to perform image annotations. Pretty barebones. Used at [Wide Eyes](http://wide-eyes.it).",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --port 3000",
     "build": "webpack",
-    "test": "test"
+    "test": "test",
+    "pbl": "npm run build && git ci -am \"build\" && npm version patch && npm publish"
   },
   "repository": {
     "type": "git",
