@@ -143,7 +143,7 @@ const Bbox = (options) => {
         const origin = cw.getUpperLeftCorner();
         const final = cw.getBottomRightCorner();
 
-        console.log(ratio)
+        console.log(ratio, origin, final)
 
         subscription({
           x1: Math.round(origin.x / ratio),
