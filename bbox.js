@@ -13,8 +13,9 @@ const Bbox = (options) => {
 
   function _Bbox({canvasContainer, img}) {
     let container;
-    let image;
     let subscription;
+
+    let image = img;
 
     let curPos = {x: 0, y: 0};
     let ratio = 1;
@@ -35,15 +36,21 @@ const Bbox = (options) => {
     const limitHeight = canvasContainer.offsetHeight
 
     while (imageWidth > limitWidth || imageHeight > limitHeight) {
-      if (imageWidth > limitWidth || imageHeight > limitHeight) {
-        const res = resizeImage(img, limitWidth, limitHeight)
-        imageWidth = res.newImage.width
-        imageHeight = res.newImage.height
-        image = res.newImage
-      } else {
-        image = img;
-      }
+      const res = resizeImage(image, limitWidth, limitHeight)
+      imageWidth = res.newImage.width
+      imageHeight = res.newImage.height
+      image = res.newImage
     }
+
+    console.log(image.width, limitWidth, image.height, limitHeight)
+
+    if (image.width === limitWidth) {
+      ratio = limitWidth / img.width
+    } else if (image.height === limitHeight) {
+      ratio = limitHeight / img.height
+    }
+
+    console.log(ratio)
 
     // create image canvas
     const canvasBack = document.createElement('canvas');
@@ -236,7 +243,7 @@ const Bbox = (options) => {
 
     function resizeWidth(image, limitWidth) {
       const newImage = document.createElement('img');
-      ratio = limitWidth / image.width;
+      const ratio = limitWidth / image.width;
 
       newImage.src = image.src;
       newImage.width = image.width * ratio;
@@ -249,7 +256,7 @@ const Bbox = (options) => {
 
     function resizeHeight(image, limitHeight) {
       const newImage = document.createElement('img');
-      ratio = limitHeight / image.height;
+      const ratio = limitHeight / image.height;
 
       newImage.src = image.src;
       newImage.width = image.width * ratio;
