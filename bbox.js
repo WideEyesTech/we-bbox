@@ -143,8 +143,6 @@ const Bbox = (options) => {
         const origin = cw.getUpperLeftCorner();
         const final = cw.getBottomRightCorner();
 
-        console.log(ratio, origin, final)
-
         subscription({
           x1: Math.round(origin.x / ratio),
           x2: Math.round(final.x / ratio),
@@ -225,7 +223,7 @@ const Bbox = (options) => {
         throw new Error('missing argument')
       }
 
-      if (limitWidth >= limitHeight) {
+      if (limitWidth < limitHeight) {
         return resizeWidth(image, limitWidth)
       } else {
         return resizeHeight(image, limitHeight)
