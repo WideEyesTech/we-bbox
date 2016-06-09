@@ -29,16 +29,20 @@ const Bbox = (options) => {
       up = 'touchend'
     }
 
-    const imageWidth = img.width;
-    const limitWidth = canvasContainer.offsetWidth;
-    const limitHeight = canvasContainer.offsetHeight;
+    let imageWidth = img.width
+    let imageHeight = img.height
+    const limitWidth = canvasContainer.offsetWidth
+    const limitHeight = canvasContainer.offsetHeight
 
-    // resize image, if needed
-    if (imageWidth > limitWidth || imageHeight > limitHeight) {
-      const res = resizeImage(img, limitWidth, limitHeight);
-      image = res.newImage;
-    } else {
-      image = img;
+    while (imageWidth > limitWidth || imageHeight > limitHeight) {
+      if (imageWidth > limitWidth || imageHeight > limitHeight) {
+        const res = resizeImage(img, limitWidth, limitHeight)
+        imageWidth = res.newImage.width
+        imageHeight = res.newImage.height
+        image = res.newImage
+      } else {
+        image = img;
+      }
     }
 
     // create image canvas
@@ -223,9 +227,9 @@ const Bbox = (options) => {
         throw new Error('missing argument')
       }
 
-      if (limitWidth < limitHeight) {
+      if (image.width > limitWidth) {
         return resizeWidth(image, limitWidth)
-      } else {
+      } else if (image.height > limitHeight) {
         return resizeHeight(image, limitHeight)
       }
     }
