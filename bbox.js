@@ -40,8 +40,8 @@ function BBOX ({canvasContainer, img}) {
 
   let imageWidth = img.width
   let imageHeight = img.height
-  const limitWidth = canvasContainer.offsetWidth - canvasContainer.style.paddingLeft - canvasContainer.style.paddingRight
-  const limitHeight = canvasContainer.offsetHeight - canvasContainer.style.paddingBottom - canvasContainer.style.paddingTop
+  const limitWidth = canvasContainer.offsetWidth
+  const limitHeight = canvasContainer.offsetHeight
 
   while (imageWidth > limitWidth || imageHeight > limitHeight) {
     const res = resizeImage(image, limitWidth, limitHeight)
@@ -154,8 +154,8 @@ function BBOX ({canvasContainer, img}) {
   function _onMouseup (e) {
     curPos = _getPosition(e)
 
-    if (cw.hasBBOX() && subscription) {
-      cw.saveBBOX()
+    if (cw.hasBbox() && subscription) {
+      cw.saveBbox()
 
       const origin = cw.getUpperLeftCorner()
       const final = cw.getBottomRightCorner()
