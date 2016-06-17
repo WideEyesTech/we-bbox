@@ -24,6 +24,8 @@
   "homepage": "https://github.com/geclos/Bbox-library#readme",
   "dependencies": {
     "ismobilejs": "^0.4.0",
+    "rc-checkbox": "^1.4.0",
+    "react": "^15.1.0",
     "rx": "^4.1.0"
   },
   "devDependencies": {
