@@ -40,8 +40,8 @@ function BBOX ({canvasContainer, img}) {
 
   let imageWidth = img.width
   let imageHeight = img.height
-  const limitWidth = canvasContainer.offsetWidth - canvasContainer.styles.paddingLeft - canvasContainer.styles.paddingRight
-  const limitHeight = canvasContainer.offsetHeight - canvasContainer.styles.paddingBottom - canvasContainer.styles.paddingTop
+  const limitWidth = canvasContainer.offsetWidth - canvasContainer.style.paddingLeft - canvasContainer.style.paddingRight
+  const limitHeight = canvasContainer.offsetHeight - canvasContainer.style.paddingBottom - canvasContainer.style.paddingTop
 
   while (imageWidth > limitWidth || imageHeight > limitHeight) {
     const res = resizeImage(image, limitWidth, limitHeight)
