@@ -28,6 +28,3 @@ Finally, you can remove the annotator by calling the dispose function:
 
 Webpack dev server: `npm start`
 build for production: `npm run build`
-
-## External Dependencies
- RxJS: `npm install --save rx`
