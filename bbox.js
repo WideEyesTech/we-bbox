@@ -10,7 +10,7 @@ module.exports = (options) => {
   return instance
 }
 
-function BBOX ({canvasContainer, img}) {
+function BBOX ({canvasContainer, img, onload}) {
   if (img == null || canvasContainer == null) {
     console.warn(
       'BBOX: Missing some arguments in here...',
@@ -42,6 +42,9 @@ function BBOX ({canvasContainer, img}) {
   let imageHeight = img.height
   const limitWidth = canvasContainer.offsetWidth
   const limitHeight = canvasContainer.offsetHeight
+
+  if (!limitHeight) throw new Error('No available height')
+  if (!limitWidth) throw new Error('No available width')
 
   while (imageWidth > limitWidth || imageHeight > limitHeight) {
     const res = resizeImage(image, limitWidth, limitHeight)
@@ -93,6 +96,13 @@ function BBOX ({canvasContainer, img}) {
   // EVENT LISTENERS
   let md = Rx.Observable.fromEvent(canvas, down).subscribe(onMousedown)
   styleCursorListener()
+
+  // optional onload callback
+  try {
+    if (onload) onload()
+  } catch (e) {
+    console.error(e.message)
+  }
 
   // MAIN RETURN
   return {

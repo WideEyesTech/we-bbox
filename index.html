@@ -6,13 +6,19 @@
     <script src="/node_modules/rx/dist/rx.all.min.js" charset="utf-8"></script>
     <script src="index.min.js" charset="utf-8"></script>
     <script type="text/javascript">
-      window.onload = function() {
+      window.onload = function () {
         var c = document.getElementById('canvasContainer')
         var img = document.createElement('img')
 
-        img.onload = function() {
-          var b = Bbox({canvasContainer: c, img: img})
-          b.subscribe(function() {console.log('annotation')})
+        img.onload = function () {
+          var b = Bbox({
+            onload: function () { console.log('loaded!') },
+            canvasContainer: c,
+            img: img
+          })
+          b.subscribe(function (annotation) {
+            console.log(annotation)
+          })
         }
 
         img.src = "http://www.dressedupgirl.com/wp-content/uploads/2014/12/Summer-Beach-Dresses.jpg"
@@ -20,6 +26,6 @@
     </script>
   </head>
   <body>
-    <div id="canvasContainer" style="width: 600px; margin: 60px auto;"></div>
+    <div id="canvasContainer" style="width: 600px; height: 400px; margin: 60px auto;"></div>
   </body>
 </html>
