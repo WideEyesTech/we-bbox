@@ -7,7 +7,7 @@
     "start": "webpack-dev-server --port 3000",
     "build": "webpack",
     "test": "test",
-    "pbl": "npm run build && git ci -am \"build\" && npm version patch && npm publish"
+    "pbl": "npm run build && npm version patch && npm publish"
   },
   "repository": {
     "type": "git",
