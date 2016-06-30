@@ -2,6 +2,10 @@
 
 FE Library to perform image annotations. Pretty barebones. Used at [Wide Eyes](http://wide-eyes.it).
 
+## Install
+
+`npm i --save we-bbox`
+
 ## Usage
 
 To start:
