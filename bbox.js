@@ -43,8 +43,12 @@ function BBOX ({canvasContainer, img, onload}) {
   const limitWidth = canvasContainer.offsetWidth
   const limitHeight = canvasContainer.offsetHeight
 
-  if (!limitHeight) throw new Error('No available height')
-  if (!limitWidth) throw new Error('No available width')
+  if (!limitHeight) {
+    return console.error('No available height. Make sure canvasContainer has width and height defined and greater than 0 before calling the annotator.')
+  }
+  if (!limitWidth) {
+    return console.error('No available width. Make sure canvasContainer has width and height defined and greater than 0 before calling the annotator.')
+  }
 
   while (imageWidth > limitWidth || imageHeight > limitHeight) {
     const res = resizeImage(image, limitWidth, limitHeight)
