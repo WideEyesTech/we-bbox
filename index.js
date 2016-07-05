@@ -1,1 +1,1 @@
-module.exports = require('dist/index.min.js')
+module.exports = require('./dist/index.min.js')
