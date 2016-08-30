@@ -5,7 +5,7 @@ const EP = {
     background: 'white',
     stroke: 'white'
   },
-  lineWidth: 3,
+  lineWidth: 1,
   width: 8
 }
 
@@ -29,8 +29,8 @@ export default function EditPoint ({origin, id, style}) {
   }
 
   function drawCorner (ctx) {
-    const W = 15
-    const S = 5
+    const W = 10
+    const S = 3
 
     ctx.save() // save current ctx state
 
@@ -47,36 +47,36 @@ export default function EditPoint ({origin, id, style}) {
         ctx.moveTo(origin.x, origin.y + W)
         ctx.lineTo(origin.x, origin.y)
         ctx.lineTo(origin.x + W, origin.y)
-        ctx.lineTo(origin.x + W, origin.y + S)
-        ctx.lineTo(origin.x + S, origin.y + S)
-        ctx.lineTo(origin.x + S, origin.y + W)
+        ctx.lineTo(origin.x + W, origin.y - S)
+        ctx.lineTo(origin.x - S, origin.y - S)
+        ctx.lineTo(origin.x - S, origin.y + W)
         ctx.lineTo(origin.x, origin.y + W)
         break
       case 2:
-        ctx.moveTo(origin.x - 1, origin.y + W)
-        ctx.lineTo(origin.x - 1, origin.y)
-        ctx.lineTo(origin.x - 1 - W, origin.y)
-        ctx.lineTo(origin.x - 1 - W, origin.y + S)
-        ctx.lineTo(origin.x - 1 - S, origin.y + S)
-        ctx.lineTo(origin.x - 1 - S, origin.y + W)
+        ctx.moveTo(origin.x, origin.y + W)
+        ctx.lineTo(origin.x, origin.y)
+        ctx.lineTo(origin.x - W, origin.y)
+        ctx.lineTo(origin.x - W, origin.y - S)
+        ctx.lineTo(origin.x + S, origin.y - S)
+        ctx.lineTo(origin.x + S, origin.y + W)
         ctx.lineTo(origin.x, origin.y + W)
         break
       case 4:
-        ctx.moveTo(origin.x - 1, origin.y - W)
-        ctx.lineTo(origin.x - 1, origin.y - 1)
-        ctx.lineTo(origin.x - W, origin.y - 1)
-        ctx.lineTo(origin.x - W, origin.y - S)
-        ctx.lineTo(origin.x - S, origin.y - S)
-        ctx.lineTo(origin.x - S, origin.y - W)
+        ctx.moveTo(origin.x, origin.y - W)
+        ctx.lineTo(origin.x, origin.y)
+        ctx.lineTo(origin.x - W, origin.y)
+        ctx.lineTo(origin.x - W, origin.y + S)
+        ctx.lineTo(origin.x + S, origin.y + S)
+        ctx.lineTo(origin.x + S, origin.y - W)
         ctx.lineTo(origin.x, origin.y - W)
         break
       case 6:
         ctx.moveTo(origin.x, origin.y - W)
         ctx.lineTo(origin.x, origin.y)
         ctx.lineTo(origin.x + W, origin.y)
-        ctx.lineTo(origin.x + W, origin.y - S)
-        ctx.lineTo(origin.x + S, origin.y - S)
-        ctx.lineTo(origin.x + S, origin.y - W)
+        ctx.lineTo(origin.x + W, origin.y + S)
+        ctx.lineTo(origin.x - S, origin.y + S)
+        ctx.lineTo(origin.x - S, origin.y - W)
         ctx.lineTo(origin.x, origin.y - W)
         break
       default:
@@ -84,7 +84,7 @@ export default function EditPoint ({origin, id, style}) {
     }
 
     ctx.fill()
-    // ctx.stroke()
+    ctx.stroke()
 
     ctx.closePath()
     ctx.restore() // restore ctx to the state before we applied our changes
