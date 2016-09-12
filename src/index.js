@@ -1,5 +1,5 @@
-import isMobile from 'ismobilejs'
 import Rx from 'rx'
+import isMobile from 'ismobilejs'
 
 import CanvasWindow from './CanvasWindow'
 
@@ -121,25 +121,55 @@ function BBOX ({canvasContainer, img, onload}) {
   // MAIN RETURN
   return {
     canvas,
+    setBbox,
     dispose,
     subscribe
   }
 
   function dispose () {
-    // clear DOM
     canvasContainer.innerHTML = ''
-
-    // cancel event listeners
     if (md.dispose) md.dispose()
-
-    ratio = 1
-
-    // clear BBOX instance
     instance = null
+    ratio = 1
   }
 
   function subscribe (callback) {
+    if (callback == null || typeof callback !== 'function') {
+      console.warn('wrong argument type, expected function and got ', typeof callback)
+      return undefined
+    }
+
     subscription = callback
+  }
+
+  function setBbox (bbox) {
+    if (bbox == null || typeof bbox !== 'object') {
+      console.warn('wrong argument type: expected Object and got ', typeof bbox)
+      return undefined
+    } else if (!bbox.x1 || !bbox.x2 || !bbox.y1 || !bbox.y1) {
+      console.warn('bbox is missing at least one coordinate: ', bbox)
+      return undefined
+    }
+
+    // check if type of all four coordinates is correct
+    for (const coord in bbox) {
+      if (bbox.hasOwnProperty(coord)) {
+        if (typeof bbox[coord] !== 'number') {
+          console.warn('wrong argument type: expected number and got ', typeof bbox[coord])
+          return undefined
+        }
+      }
+    }
+
+    const origin = {
+      x: bbox.x1 * ratio,
+      y: bbox.y1 * ratio
+    }
+
+    const width = (bbox.x2 - bbox.x1) * ratio
+    const height = (bbox.y2 - bbox.y1) * ratio
+
+    cw.draw(origin, width, height)
   }
 
   function onMousedown (md) {

@@ -27,7 +27,7 @@ To start:
 `onload` is an optional callback function.
 
 
-You can subscribe to annotations, as follows:
+You can subscribe to annotations:
 
 ```javascript
 
@@ -40,7 +40,7 @@ You can subscribe to annotations, as follows:
 The callback gets called everytime the bbox is edited in some significant way.
 
 
-Finally, you can remove the annotator by calling the dispose function:
+You can remove the annotator by calling the dispose function:
 
 ```javascript
 
@@ -49,6 +49,12 @@ Finally, you can remove the annotator by calling the dispose function:
  ```
 
 This will destroy all content within the `canvasContainer`.
+
+You can tell the library to set the bbox you want over the image:
+
+```javascript
+  bbox.setBbox({x1: 0, x2: 10, y1: 0, y2: 10})
+```
 
 ## Development
 

@@ -5,26 +5,29 @@
     <title>test</title>
     <script src="index.min.js" charset="utf-8"></script>
     <script type="text/javascript">
+      var b = null
+
       window.onload = function () {
         var c = document.getElementById('canvasContainer')
         var img = document.createElement('img')
 
         img.onload = function () {
-          var b = Bbox({
-            onload: function () { console.log('loaded!') },
+          b = Bbox({
+            img: img,
             canvasContainer: c,
-            img: img
+            onload: function () { console.log('loaded!') }
           })
           b.subscribe(function (annotation) {
             console.log(annotation)
           })
         }
 
-        img.src = "http://www.dressedupgirl.com/wp-content/uploads/2014/12/Summer-Beach-Dresses.jpg"
+        img.src = 'http://www.dressedupgirl.com/wp-content/uploads/2014/12/Summer-Beach-Dresses.jpg'
       }
     </script>
   </head>
   <body>
     <div id="canvasContainer" style="width: 600px; height: 400px; margin: 60px auto;"></div>
+    <button onclick="b.setBbox({x1: 10, x2: 100, y1: 10, y2: 100})">FOO</button>
   </body>
 </html>
