@@ -146,7 +146,12 @@ function BBOX ({canvasContainer, img, onload}) {
     if (bbox == null || typeof bbox !== 'object') {
       console.warn('wrong argument type: expected Object and got ', typeof bbox)
       return undefined
-    } else if (!bbox.x1 || !bbox.x2 || !bbox.y1 || !bbox.y1) {
+    } else if (
+      bbox.x1 == null ||
+      bbox.x2 == null ||
+      bbox.y1 == null ||
+      bbox.y1 == null
+    ) {
       console.warn('bbox is missing at least one coordinate: ', bbox)
       return undefined
     }
