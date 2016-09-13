@@ -57,6 +57,7 @@ function BBOX ({canvasContainer, img, onload}) {
   if (imageWidth > limitWidth) {
     const res = resizeWidth(image, limitWidth)
     imageWidth = res.newImage.width
+    imageHeight = res.newImage.height
     image = res.newImage
   }
 
