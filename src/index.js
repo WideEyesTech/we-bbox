@@ -94,6 +94,7 @@ function BBOX ({canvasContainer, img, onload}) {
   canvas.width = Math.floor(image.width) - 1
   canvas.height = Math.floor(image.height) - 1
   canvas.style.position = 'absolute'
+  canvas.style.top = 0
   canvas.style.left = 0
   canvas.style.cursor = 'crosshair'
   canvas.setAttribute('id', 'the_canvas')
