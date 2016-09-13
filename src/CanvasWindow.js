@@ -13,8 +13,8 @@ export default function CanvasWindow (options) {
     let editPoints = []
     let selectedEP = {}
 
-    let minSize = 60
-    let delta = 15
+    let delta = 5
+    let minSize = 15
     if (isMobile.phone) delta = 30
 
     const globalAlpha = 0.3
