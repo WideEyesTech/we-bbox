@@ -93,22 +93,19 @@ function BBOX ({canvasContainer, img, onload}) {
   const canvas = document.createElement('canvas')
   canvas.width = Math.floor(image.width) - 1
   canvas.height = Math.floor(image.height) - 1
-  canvas.style.position = 'absolute'
   canvas.style.top = 0
   canvas.style.left = 0
-  canvas.style.cursor = 'crosshair'
+  canvas.style.position = 'absolute'
   canvas.setAttribute('id', 'the_canvas')
 
   const wrapper = document.createElement('div')
-  wrapper.style.height = canvas.height
   wrapper.style.margin = '0 auto'
   wrapper.style.position = 'relative'
-  wrapper.style.width = canvas.width
+  wrapper.style.width = canvas.width + 'px'
+  wrapper.style.height = canvas.height + 'px'
 
   // draw selection window
-  const cw = CanvasWindow({
-    canvas
-  })
+  const cw = CanvasWindow({ canvas })
 
   // attach canvases to DOM
   wrapper.appendChild(canvasBack)
