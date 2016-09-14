@@ -91,8 +91,8 @@ function BBOX ({canvasContainer, img, onload}) {
 
   // create cropping canvas
   const canvas = document.createElement('canvas')
-  canvas.width = Math.floor(image.width) - 1
-  canvas.height = Math.floor(image.height) - 1
+  canvas.width = Math.floor(image.width)
+  canvas.height = Math.floor(image.height)
   canvas.style.top = 0
   canvas.style.left = 0
   canvas.style.position = 'absolute'
