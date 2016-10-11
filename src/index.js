@@ -10,7 +10,7 @@ module.exports = (options) => {
   return instance
 }
 
-function BBOX ({canvasContainer, img, onload}) {
+function BBOX ({canvasContainer, img, onload, initCoords}) {
   if (img == null || canvasContainer == null) {
     console.warn(
       'BBOX: Missing some arguments in here...',
@@ -105,9 +105,17 @@ function BBOX ({canvasContainer, img, onload}) {
   wrapper.style.position = 'relative'
   wrapper.style.width = canvas.width
 
+  let preparedCoords = initCoords ? {
+    x1: initCoords.x1 * ratio,
+    x2: initCoords.x2 * ratio,
+    y1: initCoords.y1 * ratio,
+    y2: initCoords.y2 * ratio
+  } : null
+
   // draw selection window
   const cw = CanvasWindow({
-    canvas
+    canvas,
+    preparedCoords
   })
 
   // attach canvases to DOM
