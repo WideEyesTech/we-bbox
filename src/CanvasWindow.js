@@ -19,14 +19,15 @@ export default function CanvasWindow (options) {
 
     const globalAlpha = 0.3
     const canvas = options.canvas
+    const preparedCoords = options.preparedCoords
     const ctx = canvas.getContext('2d')
 
     const w = canvas.width
     const h = canvas.height
 
     // init values
-    let p1 = origin = {x: w / 3, y: h / 3} // upper left corner of a bbox
-    let p2 = opposite = {x: 2 * w / 3, y: 2 * h / 3} // bottom right corner of a bbox
+    let p1 = origin = preparedCoords ? {x: preparedCoords.x1, y: preparedCoords.y1} : {x: w / 3, y: h / 3} // upper left corner of a bbox
+    let p2 = opposite = preparedCoords ? {x: preparedCoords.x2, y: preparedCoords.y2} : {x: 2 * w / 3, y: 2 * h / 3} // bottom right corner of a bbox
     let width = p2.x - p1.x
     let height = p2.y - p1.y
 
