@@ -46,10 +46,6 @@ function BBOX ({canvasContainer, img, onload, initCoords}) {
   console.info('image: ' + imageWidth + 'x' + imageHeight)
   console.info('limit: ' + limitWidth + 'x' + limitHeight)
 
-  // if (!limitHeight) {
-  //   return console.error('No available height. Make sure canvasContainer has width and height defined and greater than 0 before calling the annotator.')
-  // }
-
   if (!limitWidth) {
     return console.error('No available width. Make sure canvasContainer has width and height defined and greater than 0 before calling the annotator.')
   }
@@ -60,16 +56,6 @@ function BBOX ({canvasContainer, img, onload, initCoords}) {
     imageHeight = res.newImage.height
     image = res.newImage
   }
-
-  // while (imageWidth > limitWidth || imageHeight > limitHeight) {
-  //   console.info('looping: ')
-  //   console.info('image: ' + imageWidth + 'x' + imageHeight)
-
-  //   const res = resizeImage(image, limitWidth, limitHeight)
-  //   imageWidth = res.newImage.width
-  //   imageHeight = res.newImage.height
-  //   image = res.newImage
-  // }
 
   console.info('finally: ')
   console.info('image: ' + imageWidth + 'x' + imageHeight)
