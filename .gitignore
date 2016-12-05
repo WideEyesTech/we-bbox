@@ -1,3 +1,6 @@
 /lib/
 /node_modules/
 npm-*
+.DS_store
+./index.js
+

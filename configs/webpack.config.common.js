@@ -2,22 +2,17 @@ var path = require('path')
 var webpack = require('webpack')
 
 module.exports = {
-  context: __dirname,
-  entry: path.join(__dirname, '/src/index.js'),
+  entry: path.join(__dirname, '../src/index.js'),
   output: {
-    library: 'Bbox',
-    libraryTarget: 'umd',
     filename: 'index.js',
-    path: path.join(__dirname, '/lib')
-  },
-  externals: {
-    'Rx': 'rx',
-    'isMobile': 'ismobilejs'
+    library: 'Bbox',
+    libraryTarget: 'commonjs',
+    publicPath: '/'
   },
   module: {
     loaders: [{
       test: /\.js?$/,
-      exclude: /(node_modules|bower_components)/,
+      exclude: /(node_modules)/,
       loader: 'babel', // 'babel-loader' is also a legal name to reference
       query: { presets: ['es2015'] }
     }]

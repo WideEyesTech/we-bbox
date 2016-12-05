@@ -1,16 +1,13 @@
-import Rx from 'rx'
-import isMobile from 'ismobilejs'
-
 import CanvasWindow from './CanvasWindow'
+import isMobile from 'ismobilejs'
+import {Observable} from 'rxjs/Observable'
 
-let instance
+import 'rxjs/add/observable/fromEvent'
+import 'rxjs/add/operator/map'
+import 'rxjs/add/operator/take'
+import 'rxjs/add/operator/takeUntil'
 
-module.exports = (options) => {
-  if (!instance) instance = BBOX(options)
-  return instance
-}
-
-function BBOX ({canvasContainer, img, onload, initCoords}) {
+function BBOX ({canvasContainer, img, onload, initCoords, maxHeight}) {
   if (img == null || canvasContainer == null) {
     console.warn(
       'BBOX: Missing some arguments in here...',
@@ -50,6 +47,7 @@ function BBOX ({canvasContainer, img, onload, initCoords}) {
     return console.error('No available width. Make sure canvasContainer has width and height defined and greater than 0 before calling the annotator.')
   }
 
+  // while (imageWidth > limitWidth || imageHeight > limitHeight) {}
   if (imageWidth > limitWidth) {
     const res = resizeWidth(image, limitWidth)
     imageWidth = res.newImage.width
@@ -90,7 +88,7 @@ function BBOX ({canvasContainer, img, onload, initCoords}) {
   wrapper.style.width = canvas.width + 'px'
   wrapper.style.height = canvas.height + 'px'
 
-  let preparedCoords = initCoords ? {
+  const preparedCoords = initCoords ? {
     x1: initCoords.x1 * ratio,
     x2: initCoords.x2 * ratio,
     y1: initCoords.y1 * ratio,
@@ -109,7 +107,10 @@ function BBOX ({canvasContainer, img, onload, initCoords}) {
   canvasContainer.appendChild(wrapper)
 
   // EVENT LISTENERS
-  let md = Rx.Observable.fromEvent(canvas, down).subscribe(onMousedown)
+  const md = Observable
+    .fromEvent(canvas, down)
+    .subscribe(onMousedown)
+
   styleCursorListener()
 
   // optional onload callback
@@ -197,14 +198,14 @@ function BBOX ({canvasContainer, img, onload, initCoords}) {
 
     if (callback) {
       // redraw canvas on mousemoves
-      Rx.Observable
+      Observable
         .fromEvent(canvasContainer, move)
         .map(callback)
-        .takeUntil(Rx.Observable.fromEvent(canvasContainer, up))
+        .takeUntil(Observable.fromEvent(canvasContainer, up))
         .subscribe(redrawCanvas)
 
       // Callback subscription, if there is any, on mouse up
-      Rx.Observable
+      Observable
         .fromEvent(canvasContainer, up)
         .take(1) // take only first event of series
         .subscribe(_onMouseup)
@@ -212,6 +213,7 @@ function BBOX ({canvasContainer, img, onload, initCoords}) {
   }
 
   function _onMouseup (e) {
+    e.preventDefault();
     curPos = _getPosition(e)
 
     if (cw.hasBbox() && subscription) {
@@ -348,9 +350,16 @@ function BBOX ({canvasContainer, img, onload, initCoords}) {
   }
 
   function styleCursorListener () {
-    return Rx.Observable
+    return Observable
       .fromEvent(canvasContainer, move)
-      .takeUntil(Rx.Observable.fromEvent(canvasContainer, down))
+      .takeUntil(Observable.fromEvent(canvasContainer, down))
       .subscribe(_styleCursor)
   }
+}
+
+let instance
+
+module.exports = options => {
+  if (!instance) instance = BBOX(options)
+  return instance
 }

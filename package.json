@@ -1,17 +1,16 @@
 {
   "name": "we-bbox",
-  "version": "2.2.5",
-  "main": "dist/index.js",
+  "version": "0.0.0-semantically-released",
   "description": "FE Library to perform image annotations. Pretty barebones. Used at [Wide Eyes](http://wide-eyes.it).",
   "scripts": {
-    "test": "test",
-    "prepublish": "npm run build",
-    "build": "rimraf lib && webpack",
-    "start": "webpack-dev-server --port 3000 --content-base src/"
+    "test": "jest",
+    "build": "webpack --config configs/webpack.config.production.js",
+    "start": "webpack-dev-server --config configs/webpack.config.dev.js",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/geclos/Bbox-library.git"
+    "url": "https://github.com/WideEyesTech/we-bbox"
   },
   "keywords": [
     "bbox"
@@ -25,13 +24,15 @@
   "dependencies": {
     "ismobilejs": "^0.4.0",
     "react": "^15.3.2",
-    "rx": "^4.1.0"
+    "rxjs": "^5.0.0-rc.4"
   },
   "devDependencies": {
     "babel-core": "^6.7.6",
     "babel-loader": "^6.2.7",
     "babel-preset-es2015": "^6.6.0",
+    "html-webpack-plugin": "^2.24.1",
     "rimraf": "^2.5.4",
+    "semantic-release": "^6.3.2",
     "webpack": "^1.13.0",
     "webpack-dev-server": "^1.16.2"
   }

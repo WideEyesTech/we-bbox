@@ -12,7 +12,7 @@
         var img = document.createElement('img')
 
         img.onload = function () {
-          b = Bbox({
+          b = window.Bbox({
             img: img,
             canvasContainer: c,
             onload: function () { console.log('loaded!') }
