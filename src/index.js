@@ -7,7 +7,13 @@ import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/take'
 import 'rxjs/add/operator/takeUntil'
 
-function BBOX ({canvasContainer, img, onload, initCoords, maxHeight}) {
+export default function BBOX ({
+  canvasContainer,
+  img,
+  initCoords,
+  maxHeight,
+  onload
+}) {
   if (img == null || canvasContainer == null) {
     console.warn(
       'BBOX: Missing some arguments in here...',
@@ -358,8 +364,3 @@ function BBOX ({canvasContainer, img, onload, initCoords, maxHeight}) {
 }
 
 let instance
-
-module.exports = options => {
-  if (!instance) instance = BBOX(options)
-  return instance
-}
