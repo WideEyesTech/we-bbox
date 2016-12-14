@@ -6,7 +6,7 @@ module.exports = {
   output: {
     filename: 'index.js',
     library: 'Bbox',
-    libraryTarget: 'commonjs',
+    libraryTarget: 'umd',
     publicPath: '/'
   },
   module: {
