@@ -24,7 +24,8 @@
   "dependencies": {
     "ismobilejs": "^0.4.0",
     "react": "^15.3.2",
-    "rxjs": "^5.0.0-rc.4"
+    "rxjs": "^5.0.0-rc.4",
+    "we-bbox": "latest"
   },
   "devDependencies": {
     "babel-core": "^6.7.6",
