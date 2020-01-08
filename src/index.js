@@ -1,13 +1,13 @@
 import CanvasWindow from './CanvasWindow'
 import isMobile from 'ismobilejs'
-import {Observable} from 'rxjs/Observable'
+import { Observable } from 'rxjs/Observable'
 
 import 'rxjs/add/observable/fromEvent'
 import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/take'
 import 'rxjs/add/operator/takeUntil'
 
-export default function BBOX ({
+export default function BBOX({
   canvasContainer,
   img,
   initCoords,
@@ -28,7 +28,7 @@ export default function BBOX ({
 
   let image = img
 
-  let curPos = {x: 0, y: 0}
+  let curPos = { x: 0, y: 0 }
   let ratio = 1
 
   let down = 'mousedown'
@@ -134,14 +134,14 @@ export default function BBOX ({
     subscribe
   }
 
-  function dispose () {
+  function dispose() {
     canvasContainer.innerHTML = ''
     if (md.dispose) md.dispose()
     instance = null
     ratio = 1
   }
 
-  function subscribe (callback) {
+  function subscribe(callback) {
     if (callback == null || typeof callback !== 'function') {
       console.warn('wrong argument type, expected function and got ', typeof callback)
       return undefined
@@ -150,7 +150,7 @@ export default function BBOX ({
     subscription = callback
   }
 
-  function setBbox (bbox) {
+  function setBbox(bbox) {
     if (bbox == null || typeof bbox !== 'object') {
       console.warn('wrong argument type: expected Object and got ', typeof bbox)
       return undefined
@@ -181,11 +181,11 @@ export default function BBOX ({
 
     const width = (bbox.x2 - bbox.x1) * ratio
     const height = (bbox.y2 - bbox.y1) * ratio
-
+    console.log(`drawing bbox: ${JSON.stringify(bbox)} at origin: ${JSON.stringify(origin)}, width: ${width}, height: ${height}`);
     cw.draw(origin, width, height)
   }
 
-  function onMousedown (md) {
+  function onMousedown(md) {
     md.preventDefault()
 
     canvas.style.zIndex = 10
@@ -218,7 +218,7 @@ export default function BBOX ({
     }
   }
 
-  function _onMouseup (e) {
+  function _onMouseup(e) {
     e.preventDefault();
     curPos = _getPosition(e)
 
@@ -239,7 +239,7 @@ export default function BBOX ({
     return styleCursorListener()
   }
 
-  function _handleRectResize (e) {
+  function _handleRectResize(e) {
     const res = _getDelta(curPos, e)
     curPos = _getPosition(e)
 
@@ -252,7 +252,7 @@ export default function BBOX ({
     }
   }
 
-  function _handleRectMove (e) {
+  function _handleRectMove(e) {
     const res = _getDelta(curPos, e)
     curPos = _getPosition(e)
 
@@ -262,7 +262,7 @@ export default function BBOX ({
     }
   }
 
-  function redrawCanvas (e) {
+  function redrawCanvas(e) {
     switch (e.type) {
       case 'draw':
         cw.draw(e.data.origin, e.data.width, e.data.height)
@@ -278,7 +278,7 @@ export default function BBOX ({
     }
   }
 
-  function _styleCursor (e) {
+  function _styleCursor(e) {
     const pos = _getPosition(e, canvasContainer)
     const ep = cw.getEditPoint(pos)
 
@@ -291,7 +291,7 @@ export default function BBOX ({
     }
   }
 
-  function resizeImage (image, limitWidth, limitHeight) {
+  function resizeImage(image, limitWidth, limitHeight) {
     if (
       typeof image === 'undefined' ||
       typeof limitWidth === 'undefined' ||
@@ -307,7 +307,7 @@ export default function BBOX ({
     }
   }
 
-  function resizeWidth (image, limitWidth) {
+  function resizeWidth(image, limitWidth) {
     const newImage = document.createElement('img')
     const ratio = limitWidth / image.width
 
@@ -320,7 +320,7 @@ export default function BBOX ({
     }
   }
 
-  function resizeHeight (image, limitHeight) {
+  function resizeHeight(image, limitHeight) {
     const newImage = document.createElement('img')
     const ratio = limitHeight / image.height
 
@@ -333,7 +333,7 @@ export default function BBOX ({
     }
   }
 
-  function _getPosition (e) {
+  function _getPosition(e) {
     // get container position on document, it has a performance impact when window is resized
     container = canvas.getBoundingClientRect()
 
@@ -345,7 +345,7 @@ export default function BBOX ({
     }
   }
 
-  function _getDelta (origin, e) {
+  function _getDelta(origin, e) {
     // get container position on document, it has a performance impact when window is resized
     container = canvas.getBoundingClientRect()
 
@@ -355,7 +355,7 @@ export default function BBOX ({
     }
   }
 
-  function styleCursorListener () {
+  function styleCursorListener() {
     return Observable
       .fromEvent(canvasContainer, move)
       .takeUntil(Observable.fromEvent(canvasContainer, down))

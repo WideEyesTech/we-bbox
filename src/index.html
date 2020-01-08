@@ -1,33 +1,40 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>test</title>
-    <script src="./index.js" charset="utf-8"></script>
-    <script type="text/javascript">
-      var b = null
 
-      window.onload = function () {
-        var c = document.getElementById('canvasContainer')
-        var img = document.createElement('img')
+<head>
+  <meta charset="utf-8">
+  <title>test</title>
+  <script src="./index.js" charset="utf-8"></script>
+  <script type="text/javascript">
+    var b = null
+    var bbox = { x1: 440, y1: 540, x2: 497, y2: 621 };
+    window.onload = function () {
+      var c = document.getElementById('canvasContainer')
+      var img = document.createElement('img')
 
-        img.onload = function () {
-          b = window.Bbox({
-            img: img,
-            canvasContainer: c,
-            onload: function () { console.log('loaded!') }
-          })
-          b.subscribe(function (annotation) {
-            console.log(annotation)
-          })
-        }
-
-        img.src = 'http://www.dressedupgirl.com/wp-content/uploads/2014/12/Summer-Beach-Dresses.jpg'
+      img.onload = function () {
+        b = window.Bbox.default({
+          img: img,
+          canvasContainer: c,
+          onload: function () { console.log('loaded!') }
+        })
+        b.subscribe(function (annotation) {
+          console.log(annotation)
+        })
       }
-    </script>
-  </head>
-  <body>
-    <div id="canvasContainer" style="width: 600px; height: 400px; margin: 60px auto;"></div>
-    <button onclick="b.setBbox({x1: 10, x2: 100, y1: 10, y2: 100})">FOO</button>
-  </body>
+
+      //img.src = 'http://www.dressedupgirl.com/wp-content/uploads/2014/12/Summer-Beach-Dresses.jpg'
+      img.src = 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/nyc-fashion-week-street-style-nyfw-ss20-tyler-joe-day-4-cos-069-1568297393.jpg?crop=0.669xw:1.00xh;0.130xw,0&resize=640:*';
+
+    }
+  </script>
+</head>
+
+<body>
+  <div id="canvasContainer" style="height: 10px; margin: 60px auto;"></div>
+
+  <!-- <button onclick="b.setBbox({x1: 10, x2: 100, y1: 10, y2: 100})">FOO</button> -->
+  <button onclick="b.setBbox(bbox)">setBbox</button>
+</body>
+
 </html>
